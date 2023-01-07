@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一個用來生成嘉義大學課表的網頁，讓你不用慢慢做課表。除了在網頁生成課表外，也能夠使用輸出 png 圖片功能，一張圖片用一學期">
+    <meta name="KeyWords" content="我是蔡旻憲">
+    <title>大學課表產生器</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMVJ7NC8SP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HMVJ7NC8SP');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js"
+        integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="icon" href="images/icon.png">
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        function wakeBackendUp() { // 隨便送個request叫醒後端
+            const LOGIN_URL = 'https://chayi-university-system-api.herokuapp.com/login'
+            $.ajax({
+                url: LOGIN_URL,
+                type: "POST",
+                dataType: "json",
+                async: true,
+                data: {
+                    account: 'wakeBackendUp',
+                    password: 'wakeBackendUp'
+                },
+            }).fail(() => {
+            })
+        }
+
+        function onloadTasks() {
+            wakeBackendUp()
+        }
+
+        window.onload = onloadTasks
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="jquery.rowspanizer.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg">
+        <div class="navbar-brand brand">
+            <img src="images/player.png" width="50" height="50" >
+            <h1 class="ml-3">大學課表產生器</h1>
+        
+    </nav>
+      
+        <form>
+            <div class="form-group">
+                <label for="account">學號</label>
+                <input class="form-control" type="text" id="account" name="account" value="" required="required"
+                    required placeholder="你的學號">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">密碼</label>
+                <input class="form-control" type="text" id="password" name="password" value=""
+                    required="required" required placeholder="你校務行政系統的密碼">
+                <small class="form-text text-muted">放心，程式後端不會記錄你的密碼</small>
+            </div>
+            <span id="status" class="text-muted"></span>
+            <br>
+<!--button--><button id="generateButton" class="btn btn-outline-primary form-submit" type="submit">生成</button>
+            <div class="table-responsive table-div">
+                <button class="btn bg-secondary text-white rounded float-right mb-1" id="exportButton" type="button">輸出為 png </button>
+                <table id="curriculum" class="table"></table>
+            </div>
+        </form>
+    
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-muted">
+        <!-- Section: Social media -->
+        <!-- Copyright -->
+        
+    </footer>
+    <!-- Footer -->
+
+
+</body>
+
+</html>
+
+<script src="scripts.js"></script>
