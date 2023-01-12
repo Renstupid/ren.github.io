@@ -129,8 +129,8 @@ const renderTable = (courses) => {
                 tds = $(rows[i]).children('td')
                 $(tds[day]).append(`<div class="course-name">【${courseName}】</div>`)
                 $(tds[day]).append('<br>')
-                $(tds[day]).append(`<div class="course-classroom">教室:${courseClassroom}</div>`)
-                $(tds[day]).append(`<div class="course-teacher">讓我過: ${courseTeacher}</div>`)
+                $(tds[day]).append(`<div class="course-classroom">${courseClassroom}</div>`)
+                $(tds[day]).append(`<div class="course-teacher">導師: ${courseTeacher}</div>`)
 
                 $(tds[day]).addClass('used-td')
             }
