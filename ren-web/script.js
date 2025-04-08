@@ -6,4 +6,8 @@ window.addEventListener('scroll', function () {
       navbar.classList.remove('scrolled');
     }
   });
+
+  function goToYoutube() {
+    window.open("https://www.youtube.com/", "_blank");
+  }
   
