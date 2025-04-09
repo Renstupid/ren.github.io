@@ -5,6 +5,7 @@
   <title>Firebase 查價圖表</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="chart-firebase.js" defer></script>
+  <link rel="stylesheet" href="price.css" />
   <style>
     body {
       font-family: sans-serif;
@@ -20,6 +21,10 @@
 </head>
 <body>
   <h2>查價走勢圖（Firebase）</h2>
+  <div class="toggle-group">
+    <button id="avgBtn" class="active">均價</button>
+    <button id="totalBtn">總價</button>
+  </div>  
   <canvas id="priceChart"></canvas>
 </body>
 </html>

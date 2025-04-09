@@ -15,37 +15,68 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const dataRef = ref(db, "priceData");
 
-get(dataRef).then((snapshot) => {
-  if (snapshot.exists()) {
-    const rawData = Object.values(snapshot.val());
-    const labels = rawData.map(d => d.時間);
-    const buyPer = rawData.map(d => d.均價_買進);
-    const sellPer = rawData.map(d => d.均價_賣出);
-    const buyTotal = rawData.map(d => d.總價_買進);
-    const sellTotal = rawData.map(d => d.總價_賣出);
+let chart = null;
 
-    const ctx = document.getElementById("priceChart").getContext("2d");
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          { label: "均價 買進", data: buyPer, borderColor: "green", fill: false },
-          { label: "均價 賣出", data: sellPer, borderColor: "red", fill: false },
-          { label: "總價 買進", data: buyTotal, borderColor: "blue", fill: false },
-          { label: "總價 賣出", data: sellTotal, borderColor: "orange", fill: false }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: false }
+function renderChart(labels, datasets) {
+  const ctx = document.getElementById("priceChart").getContext("2d");
+  if (chart) chart.destroy(); // 清除舊圖
+  chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false
         }
       }
-    });
-  } else {
+    }
+  });
+}
+
+function activateButton(id) {
+  document.querySelectorAll("button").forEach(btn => btn.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+get(dataRef).then((snapshot) => {
+  if (!snapshot.exists()) {
     console.error("❌ Firebase 資料不存在！");
+    return;
   }
+
+  const rawData = Object.values(snapshot.val());
+  const labels = rawData.map(d => d.時間);
+  const buyPer = rawData.map(d => d.均價_買進);
+  const sellPer = rawData.map(d => d.均價_賣出);
+  const buyTotal = rawData.map(d => d.總價_買進);
+  const sellTotal = rawData.map(d => d.總價_賣出);
+
+  const avgDatasets = [
+    { label: "均價 買進", data: buyPer, borderColor: "green", fill: false },
+    { label: "均價 賣出", data: sellPer, borderColor: "red", fill: false }
+  ];
+  const totalDatasets = [
+    { label: "總價 買進", data: buyTotal, borderColor: "blue", fill: false },
+    { label: "總價 賣出", data: sellTotal, borderColor: "orange", fill: false }
+  ];
+
+  // 預設顯示均價
+  renderChart(labels, avgDatasets);
+
+  // 按鈕切換事件
+  document.getElementById("avgBtn").onclick = () => {
+    renderChart(labels, avgDatasets);
+    activateButton("avgBtn");
+  };
+  document.getElementById("totalBtn").onclick = () => {
+    renderChart(labels, totalDatasets);
+    activateButton("totalBtn");
+  };
+
 }).catch((error) => {
   console.error("❌ 讀取 Firebase 資料失敗：", error);
 });
