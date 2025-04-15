@@ -17,7 +17,7 @@
   }
   
   .navbar.scrolled {
-    background-color: rgba(98, 98, 103, 0.85);
+    background-color: rgba(49, 48, 48, 0.85);
   }
   
   .nav-content {
@@ -46,7 +46,7 @@
     flex-wrap: wrap;
   }
   nav a {
-    color: white;
+    color: rgb(114, 196, 240);
     text-decoration: none;
     margin: 0 10px;
     font-size: 1rem;
@@ -72,18 +72,19 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: rgba(159, 209, 236, 0.4); /* 遮罩 */
+    background-color: rgba(208, 232, 242, 0.4); /* 遮罩 */
   }
   .hero-text {
     position: relative;
   }
   .hero h1 {
-    font-size: 3rem;
-    color: #f7c600;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
   }
   .hero h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    margin-bottom: 15rem;
+    color:  #f7c600;
   }
   .content {
     background-color: white;
@@ -130,12 +131,48 @@
     line-height: 1.5;
   }
 
-  
-  
-  @media (max-width: 768px) {
-    .hero {
-      height: 300px;
-    }
+  /* 平常：桌機用橫排 */
+.nav-menu {
+  display: flex;
+  gap: 1rem;
+}
+
+/* 手機模式 */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none; /* 預設隱藏選單 */
+    flex-direction: column;
+    background-color: #333;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 1rem;
+    border-radius: 8px;
   }
+
+  .hero {
+    height: 300px;
+  }
+
+  .nav-menu.active {
+    display: flex; /* 點到按鈕才顯示 */
+  }
+
+  .hamburger {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+/* 桌機模式下不顯示漢堡按鈕 */
+.hamburger {
+  display: none;
+}
+
+
   
   

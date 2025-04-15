@@ -6,10 +6,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="chart-firebase.js" defer></script>
   <link rel="stylesheet" href="price.css" />
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: sans-serif;
-      background: #f4f7fa;
+      background: #e3e8ee;
       padding: 2rem;
       text-align: center;
     }
@@ -20,11 +21,33 @@
   </style>
 </head>
 <body>
+  <header class="navbar" id="navbar"> 
+    <div class="nav-content">
+      <div class="logo">
+        <img src="images/logo.png" alt="logo" />
+        <span>
+          <a>Rens</a>
+        </span>
+      </div>
+      <nav>
+        <a href="index.html">首頁</a>
+        <a href="convert.html">村綠匯率</a>
+        <a href="#">地圖</a>
+        <a href="#" onclick="goToYoutube()">Youtube</a>
+        <a href="#" onclick="goToGithib()">Github</a>
+        <a href="#">合作</a>
+      </nav>
+    </div>
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+  </header>
+
   <h2>查價走勢圖（Firebase）</h2>
-  <div class="toggle-group">
+  <section class="toggle-group">
     <button id="avgBtn" class="active">均價</button>
     <button id="totalBtn">總價</button>
-  </div>  
+  </section>  
   <canvas id="priceChart"></canvas>
 </body>
 </html>
