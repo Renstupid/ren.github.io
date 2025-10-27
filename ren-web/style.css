@@ -72,7 +72,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: rgba(208, 232, 242, 0); /* 遮罩 */
+    background-color: rgba(208, 232, 242, 0.4); /* 遮罩 */
   }
   .hero-text {
     position: relative;
